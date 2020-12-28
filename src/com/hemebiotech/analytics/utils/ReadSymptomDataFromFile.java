@@ -13,7 +13,6 @@ import java.io.IOException;
 public class ReadSymptomDataFromFile implements ISymptomReader {
 
     private final String filepath;
-
     /**
      * @param filepath a full or partial path to file with symptom strings in it, one per line
      */
@@ -23,13 +22,8 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 
     @Override
     public void readSymptoms() {
-        FileReader fileReader = null;
-        BufferedReader bufferedReader = null;
         if (filepath != null) {
-            try {
-                fileReader = new FileReader(filepath);
-                bufferedReader = new BufferedReader(fileReader);
-
+            try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filepath))) {
                 String line = bufferedReader.readLine();
                 while (line != null) {
                     new Symptom(line);
@@ -37,15 +31,6 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
                 }
             } catch (IOException e) {
                 System.err.format("IOException: %s%n", e);
-            } finally {
-                try {
-                    if (bufferedReader != null)
-                        bufferedReader.close();
-                    if (fileReader != null)
-                        fileReader.close();
-                } catch (IOException ex) {
-                    System.err.format("IOException: %s%n", ex);
-                }
             }
         }
     }

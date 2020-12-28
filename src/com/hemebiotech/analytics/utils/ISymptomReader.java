@@ -1,4 +1,7 @@
 package com.hemebiotech.analytics.utils;
+
+import java.io.IOException;
+
 /**
  * Anything that will read symptom data from a source
  * The important part is, the return value from the operation, which is a list of strings,
@@ -12,5 +15,5 @@ public interface ISymptomReader {
 	 * 
 	 *a raw listing of all Symptoms obtained from a data source, duplicates are possible/probable
 	 */
-	void readSymptoms ();
+	void readSymptoms () throws IOException;
 }

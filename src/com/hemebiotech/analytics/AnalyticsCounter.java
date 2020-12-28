@@ -1,43 +1,21 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
+import com.hemebiotech.analytics.models.Symptom;
+import com.hemebiotech.analytics.utils.ReadSymptomDataFromFile;
+import com.hemebiotech.analytics.utils.WriteSymptomDataFile;
 
+/**
+ * Main class of project that print out
+ * the occurrence of each symptoms
+ */
 public class AnalyticsCounter {
-	private static int headacheCount = 0;	// initialize to 0
-	private static int rashCount = 0;		// initialize to 0
-	private static int pupilCount = 0;		// initialize to 0
-	
-	public static void main(String args[]) throws Exception {
-		// first get input
-		BufferedReader reader = new BufferedReader (new FileReader("symptoms.txt"));
-		String line = reader.readLine();
+    public static void main(String[] args) throws Exception {
+        // Read symptoms
+        ReadSymptomDataFromFile reader = new ReadSymptomDataFromFile("symptoms.txt");
+        reader.readSymptoms();
 
-		int i = 0;	// set i to 0
-		int headCount = 0;	// counts headaches
-		while (line != null) {
-			i++;	// increment i
-			System.out.println("symptom from file: " + line);
-			if (line.equals("headache")) {
-				headCount++;
-				System.out.println("number of headaches: " + headCount);
-			}
-			else if (line.equals("rush")) {
-				rashCount++;
-			}
-			else if (line.contains("pupils")) {
-				pupilCount++;
-			}
-
-			line = reader.readLine();	// get another symptom
-		}
-		
-		// next generate output
-		FileWriter writer = new FileWriter ("result.out");
-		writer.write("headache: " + headacheCount + "\n");
-		writer.write("rash: " + rashCount + "\n");
-		writer.write("dialated pupils: " + pupilCount + "\n");
-		writer.close();
-	}
+        // Write symptoms and occurrences inside of a file
+        WriteSymptomDataFile writer = new WriteSymptomDataFile();
+        writer.writeSymptomData("result.out", Symptom.getSymptomsOccurrence());
+    }
 }

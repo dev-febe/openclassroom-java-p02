@@ -1,11 +1,11 @@
 package com.hemebiotech.analytics.models;
 
-import java.util.Hashtable;
+import java.util.TreeMap;
 
 public class Symptom {
     private String name;
     private int count = 0;
-    private final static Hashtable<String, Integer> symptomsOccurrence = new Hashtable<>();
+    private final static TreeMap<String, Integer> symptomsOccurrence = new TreeMap<>();
 
     public Symptom(String name) {
         this.name = name;
@@ -38,7 +38,7 @@ public class Symptom {
         symptomsOccurrence.put(name, getCount());
     }
 
-    public static Hashtable<String, Integer> getSymptomsOccurrence() {
+    public static TreeMap<String, Integer> getSymptomsOccurrence() {
         return  symptomsOccurrence;
     }
 }
